@@ -17,6 +17,12 @@ pub struct GoogleBooks {
     pub client: reqwest::Client,
 }
 
+impl Default for GoogleBooks {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl GoogleBooks {
     /// Creates a new GoogleBooks client instance
     pub fn new() -> Self {
@@ -39,12 +45,13 @@ impl GoogleBooks {
     /// # }
     /// ```
     pub async fn search(&self, query: VolumeQuery) -> Result<VolumeResponse, AppError> {
-        Ok(reqwest::get(query.build_url(GOOGLE_BOOKS_BASE_URL))
+        let result = reqwest::get(query.build_url(GOOGLE_BOOKS_BASE_URL))
             .await
             .context(HttpSnafu)?
             .json::<VolumeResponse>()
             .await
-            .context(DeserializeJsonSnafu)?)
+            .context(DeserializeJsonSnafu)?;
+        Ok(result)
     }
 
     /// Fetches a specific book by its volume ID
@@ -59,7 +66,7 @@ impl GoogleBooks {
     /// # }
     /// ```
     pub async fn search_by_id(id: impl Into<String>) -> Result<VolumeResponse, AppError> {
-        Ok(reqwest::get(&format!(
+        let result = reqwest::get(&format!(
             "{}/books/v1/volumes/{}",
             GOOGLE_BOOKS_BASE_URL,
             id.into()
@@ -68,6 +75,8 @@ impl GoogleBooks {
         .context(HttpSnafu)?
         .json::<VolumeResponse>()
         .await
-        .context(DeserializeJsonSnafu)?)
+        .context(DeserializeJsonSnafu)?;
+
+        Ok(result)
     }
 }

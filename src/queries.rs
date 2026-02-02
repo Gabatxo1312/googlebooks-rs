@@ -213,7 +213,7 @@ impl VolumeQuery {
     ///
     /// # Arguments
     ///
-    /// * base - Base API URL (e.g., "https://www.googleapis.com")
+    /// * base - Base API URL (e.g., "<https://www.googleapis.com>")
     ///
     /// # Panics
     ///
