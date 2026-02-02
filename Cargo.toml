@@ -1,6 +1,17 @@
 [package]
-name = "googlebook-rs"
+name = "googlebooks-rs"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+description = "A Rust client library for the Google Books API"
+readme = "README.md"
+license = "AGPL-3.0"
+keywords = ["google", "books", "api", "client"]
+categories = ["api-bindings", "web-programming::http-client"]
 
 [dependencies]
+http = "1.4.0"
+reqwest = { version = "0.13.1", features = ["json"] }
+serde = { version = "1.0.228", features = ["derive"] }
+snafu = "0.8.9"
+thiserror = "2.0.18"
+tokio = { version = "1.49.0", features = ["macros", "rt-multi-thread"] }
