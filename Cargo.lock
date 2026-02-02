@@ -263,7 +263,6 @@ dependencies = [
  "reqwest",
  "serde",
  "snafu",
- "thiserror 2.0.18",
  "tokio",
 ]
 
