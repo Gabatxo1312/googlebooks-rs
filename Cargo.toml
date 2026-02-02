@@ -1,10 +1,12 @@
 [package]
-name = "googlebooks-rs"
+name = "googlebook-rs"
 version = "0.1.0"
 edition = "2021"
+authors = ["Gabatxo <gabatxo@kl.netlib.re>"]
 description = "A Rust client library for the Google Books API"
 readme = "README.md"
-license = "AGPL-3.0"
+repository = "https://github.com/Gabatxo1312/googlebooks-rs"
+license = "MIT"
 keywords = ["google", "books", "api", "client"]
 categories = ["api-bindings", "web-programming::http-client"]
 
