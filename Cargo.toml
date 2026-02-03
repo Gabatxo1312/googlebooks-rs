@@ -9,7 +9,7 @@ repository = "https://github.com/Gabatxo1312/googlebooks-rs"
 license = "AGPL-3.0-or-later"
 keywords = ["google", "books", "api", "client"]
 categories = ["api-bindings", "web-programming::http-client"]
-exclude = ["pre-commit.sh", ".github/", ".gitignore"]
+exclude = ["pre-commit.sh", ".github/", ".gitignore", "examples/"]
 
 [dependencies]
 http = "1.4.0"
