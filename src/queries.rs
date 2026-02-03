@@ -17,6 +17,8 @@
 //!     .max_results(10)
 //!     .projection(Projection::Lite);
 
+use serde::Deserialize;
+
 #[derive(Debug, Clone)]
 pub enum Projection {
     /// Includes all volume metadata (default).
@@ -35,7 +37,7 @@ impl std::fmt::Display for Projection {
 }
 
 /// Print type for filtering results.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Deserialize)]
 pub enum PrintType {
     /// Returns all content types (default).
     All,
@@ -222,7 +224,7 @@ impl VolumeQuery {
     /// # Note
     ///
     /// This method is typically called internally by the client and
-    pub fn build_url(&self, base: &str) -> reqwest::Url {
+    pub fn build_url(&self, base: &str, api_key: Option<String>) -> reqwest::Url {
         let base_url = &format!("{}/books/v1/volumes", base);
         let mut queries: Vec<(String, String)> = Vec::with_capacity(5);
 
@@ -245,6 +247,9 @@ impl VolumeQuery {
         }
         if let Some(print_type) = self.print_type.clone() {
             queries.push(("projection".to_string(), print_type.to_string()));
+        }
+        if let Some(key) = api_key {
+            queries.push(("key".to_string(), key.to_string()));
         }
 
         reqwest::Url::parse_with_params(base_url, queries).unwrap()
@@ -302,12 +307,27 @@ mod tests {
             .max_results(5)
             .lang_restrict("fr".to_string());
 
-        let url = query.build_url("https://www.googleapis.com");
+        let url = query.build_url("https://www.googleapis.com", None);
         println!("{:?}", url.as_str());
 
         assert!(url.as_str().contains("q=isbn%3A123456789"));
         assert!(url.as_str().contains("maxResults=5"));
         assert!(url.as_str().contains("langRestrict=fr"));
+    }
+
+    #[test]
+    fn test_build_url_with_api_key() {
+        let query = VolumeQuery::isbn("123456789")
+            .max_results(5)
+            .lang_restrict("fr".to_string());
+
+        let url = query.build_url("https://www.googleapis.com", Some("api_key".to_string()));
+        println!("{:?}", url.as_str());
+
+        assert!(url.as_str().contains("q=isbn%3A123456789"));
+        assert!(url.as_str().contains("maxResults=5"));
+        assert!(url.as_str().contains("langRestrict=fr"));
+        assert!(url.as_str().contains("key=api_key"));
     }
 
     #[test]

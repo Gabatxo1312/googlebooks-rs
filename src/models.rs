@@ -6,7 +6,7 @@ pub struct VolumeResponse {
     pub kind: String,
     #[serde(rename(deserialize = "totalItems"))]
     pub total_items: i32,
-    pub items: Vec<Book>,
+    pub items: Option<Vec<Book>>,
 }
 
 /// Represents a book with its basic metadata
@@ -14,7 +14,7 @@ pub struct VolumeResponse {
 pub struct Book {
     pub id: String,
     pub etag: String,
-    pub kink: Option<String>,
+    pub kind: Option<String>,
     #[serde(rename(deserialize = "selfLink"))]
     pub self_link: String,
     #[serde(rename(deserialize = "volumeInfo"))]
@@ -56,4 +56,24 @@ pub struct IndustryIdentifiers {
     pub identifier: String,
     #[serde(rename(deserialize = "type"))]
     pub identifier_type: String, // voir les types possible
+}
+
+#[derive(Debug, Deserialize)]
+pub struct GoogleApiError {
+    pub error: GoogleApiErrorDetail,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct GoogleApiErrorDetail {
+    pub code: u16,
+    pub message: String,
+    pub status: Option<String>,
+    pub errors: Option<Vec<GoogleApiErrorItem>>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct GoogleApiErrorItem {
+    pub message: String,
+    pub domain: String,
+    pub reason: String,
 }

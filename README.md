@@ -25,6 +25,8 @@ use googlebook_rs::{GoogleBooks, queries::VolumeQuery};
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let client = GoogleBooks::new();
+    // or with an API key
+    // let client = GoogleBooks::new(Some("API_KEY".to_string()));
     
     // Search by ISBN
     let query = VolumeQuery::isbn("9782348054693");
