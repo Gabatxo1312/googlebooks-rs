@@ -32,7 +32,7 @@ pub struct VolumeInfo {
     pub published_date: String,
     pub description: Option<String>,
     #[serde(rename(deserialize = "industryIdentifiers"))]
-    pub industry_identifiers: Vec<IndustryIdentifiers>,
+    pub industry_identifiers: Option<Vec<IndustryIdentifiers>>,
     #[serde(rename(deserialize = "pageCount"))]
     pub page_count: u16,
     #[serde(rename(deserialize = "printType"))]
