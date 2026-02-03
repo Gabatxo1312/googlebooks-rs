@@ -23,4 +23,4 @@ jobs:
         with:
           components: clippy, rustfmt
       - uses: Swatinem/rust-cache@v2      
-      - run: ./scripts/pre-commit.sh
+      - run: ./pre-commit.sh
