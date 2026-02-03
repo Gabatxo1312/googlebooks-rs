@@ -58,14 +58,18 @@ pub struct IndustryIdentifiers {
     pub identifier_type: String, // voir les types possible
 }
 
+/// Error of Google Book API
 #[derive(Debug, Deserialize)]
 pub struct GoogleApiError {
     pub error: GoogleApiErrorDetail,
 }
 
+/// Detail of error
 #[derive(Debug, Deserialize)]
 pub struct GoogleApiErrorDetail {
+    /// CODE error
     pub code: u16,
+    /// Error description
     pub message: String,
     pub status: Option<String>,
     pub errors: Option<Vec<GoogleApiErrorItem>>,
