@@ -48,12 +48,6 @@ impl GoogleBooks {
     /// # }
     /// ```
     pub async fn search(&self, query: VolumeQuery) -> Result<VolumeResponse, AppError> {
-        println!(
-            "{:?}",
-            query
-                .build_url(GOOGLE_BOOKS_BASE_URL, self.api_key.clone())
-                .as_str()
-        );
         let response = reqwest::get(query.build_url(GOOGLE_BOOKS_BASE_URL, self.api_key.clone()))
             .await
             .context(HttpSnafu)?;
