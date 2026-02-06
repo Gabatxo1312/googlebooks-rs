@@ -16,7 +16,7 @@ pub struct Book {
     pub etag: String,
     pub kind: Option<String>,
     #[serde(rename(deserialize = "selfLink"))]
-    pub self_link: String,
+    pub self_link: Option<String>,
     #[serde(rename(deserialize = "volumeInfo"))]
     pub volume_info: VolumeInfo,
 }
@@ -29,25 +29,34 @@ pub struct VolumeInfo {
     pub authors: Option<Vec<String>>,
     pub publisher: Option<String>,
     #[serde(rename(deserialize = "publishedDate"))]
-    pub published_date: String,
+    pub published_date: Option<String>,
     pub description: Option<String>,
     #[serde(rename(deserialize = "industryIdentifiers"))]
     pub industry_identifiers: Option<Vec<IndustryIdentifiers>>,
     #[serde(rename(deserialize = "pageCount"))]
-    pub page_count: u16,
-    #[serde(rename(deserialize = "printType"))]
+    pub page_count: Option<u16>,
+    #[serde(
+        rename(deserialize = "printType"),
+        default = "VolumeInfo::default_print_type"
+    )]
     pub print_type: String,
     pub categories: Option<Vec<String>>,
     #[serde(rename(deserialize = "imageLinks"))]
     pub image_links: Option<ImageLink>,
 }
 
+impl VolumeInfo {
+    pub fn default_print_type() -> String {
+        "".to_string()
+    }
+}
+
 /// Links to cover images
 #[derive(Deserialize, Debug)]
 pub struct ImageLink {
     #[serde(rename(deserialize = "smallThumbnail"))]
-    pub small_thumbnail: String, // Mettre un type URL
-    pub thumbnail: String, // mettre un type URL
+    pub small_thumbnail: Option<String>,
+    pub thumbnail: Option<String>,
 }
 
 /// Book standard identifiers (ISBN-10, ISBN-13, etc.)
@@ -55,7 +64,7 @@ pub struct ImageLink {
 pub struct IndustryIdentifiers {
     pub identifier: String,
     #[serde(rename(deserialize = "type"))]
-    pub identifier_type: String, // voir les types possible
+    pub identifier_type: String,
 }
 
 /// Error of Google Book API
