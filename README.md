@@ -14,7 +14,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-googlebooks-rs = "0.2.1"
+googlebooks-rs = "0.2.2"
 ```
 
 ## Usage
